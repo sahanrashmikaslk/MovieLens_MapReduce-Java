@@ -336,17 +336,17 @@ wsl --shutdown
 
 4️: Download and extract Hadoop
    - Download Hadoop 3.4.1 and extract it to home directory.
-   ![installed proof hdfs](src/InstalledProofOfHDFS.png)
+   ![installed proof hdfs](src/Screenshots/InstalledProofOfHDFS.png)
 
 5️: Configure Hadoop
    - Edit `core-site.xml`, `hdfs-site.xml`, `mapred-site.xml`, and `yarn-site.xml` in the Hadoop configuration directory.
    - Set environment variables in `.bashrc` for Hadoop and Java.
-   ![Set environment variables](src/SetEnvironmentVariables.png)
+   ![Set environment variables](src/Screenshots/SetEnvironmentVariables.png)
 
 6️: Format HDFS and start Hadoop
    - Format HDFS using `bin/hdfs namenode -format`.
    - Start Hadoop services with `sbin/start-dfs.sh` and `sbin/start-yarn.sh`
-   ![Start HDFS](src/StartHDFS.png)
+   ![Start HDFS](src/Screenshots/StartHDFS.png)
 
 7️: Compile the MapReduce jobs
    - Compile Java code in the `src/movielens` directory and create a jar file.
@@ -354,14 +354,14 @@ wsl --shutdown
 8️: Run the Average Rating job and Most Rated job
    - Use `hadoop jar` command to run the Average Rating job on the `ratings.csv` file. 
    - Use `hadoop jar` command to run the Most Rated job on the same `ratings.csv` file.
-   ![Compile Code](src/CompileCode.png)
+   ![Compile Code](src/Screenshots/CompileCode.png)
    
    - Proof of working jobs 
-   ![Proof of working jobs](src/ProofOfWorkingJobs.png)
+   ![Proof of working jobs](src/Screenshots/ProofOfWorkingJobs.png)
 
 9: Verify output files
    - Use `hadoop fs -head` to check the output files for average ratings and rating counts.
-   ![Head Print](src/HeadPrint.png)
+   ![Head Print](src/Screenshots/HeadPrint.png)
 
 10: Visualize results with Python
    - Run `plot_movies.py` to generate plots from the output files.
@@ -376,10 +376,10 @@ wsl --shutdown
    - Open HDFS and YARN UIs in your web browser using the WSL IP or `localhost`
 
    ### HDFS UI (NameNode): `http://localhost:9870`
-   ![HDFS UI](src/HDFSUI.png)
+   ![HDFS UI](src/Screenshots/HDFSUI.png)
 
    ### YARN UI (ResourceManager):`http://localhost:8088` 
-   ![YARN UI](src/YARNUI.png)
+   ![YARN UI](src/Screenshots/YARNUI.png)
 
 1️2: Shutdown Hadoop and WSL
    - Stop Hadoop services and shut down WSL.
