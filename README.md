@@ -1,6 +1,10 @@
 # Hadoop MapReduce Analysis of MovieLens 25M Ratings
 
 ## Project Structure
+This project implements two MapReduce jobs using Hadoop to analyze the MovieLens 25M dataset. The first job calculates the average rating per movie, and the second job counts the number of ratings each movie received. The results are then visualized using Python.
+
+## Project Directory Structure
+The project is organized into directories for source code, data, and output, as follows:
 
 ```
 
@@ -15,37 +19,195 @@
 │       ├── AverageRatingDriver.java        # Driver: runs avg rating job
 │       └── MostRatedDriver.java            # Driver: runs most rated job
 ├── MovieLensAnalysis.jar       # Compiled jar (after build)
+|── build/
+|    └── classes/
+|        └── [compiled .class files]
 ├── output/
-│   └── \[plotted images from plot\_movielens.py]
-├── plot\_movielens.py           # Python script to plot results (matplotlib)
-├── rating\_counts.tsv           # Output: movieId and total count (most rated job)
-└── avg\_ratings.tsv             # Output: movieId and average rating (avg rating job)
-└── build/
-    └── classes/
-        └── [compiled .class files]
+│   └── \[plotted images from plot_movies.py]
+├── plot_movies.py               # Python script to plot results (matplotlib)
+├── rating_counts.tsv           # Output: movieId and total count (most rated job)
+└── avg_ratings.tsv             # Output: movieId and average rating (avg rating job)
+
+```
+## Overview of MapReduce Jobs
+
+This project implements two MapReduce jobs to analyze the MovieLens 25M dataset:
+
+1. **Average Rating Job**: This job calculates the average rating for each movie. It reads the `ratings.csv` file, where each line contains a user ID, movie ID, rating, and timestamp. The mapper emits `(movieId, rating)` pairs, and the reducer computes the average rating for each movie.
+2. **Most Rated Job**: This job counts the number of ratings each movie received. The mapper emits `(movieId, 1)` for each rating, and the reducer sums these counts to produce a total count of ratings per movie.
+
+## Dataset
+
+The dataset used in this project is the **MovieLens 25M Ratings** dataset, which contains 25 million ratings from users on various movies. The dataset is available on Kaggle - https://www.kaggle.com/datasets/garymk/movielens-25m-dataset . 
+
+The relevant file for this project is `ratings.csv`, which contains the following columns:
+
+- `userId`: Unique identifier for each user.
+- `movieId`: Unique identifier for each movie.
+- `rating`: Rating given by the user (on a scale of 0.5 to 5.0).
+- `timestamp`: Timestamp of when the rating was given (not used in this analysis).
+
+## Prerequisites
+
+To run this project, you need the following:
+- **Hadoop**: A Hadoop environment set up (local or cluster).
+- **Java**: Java Development Kit (JDK) installed to compile the Java code.
+- **Python**: Python with `matplotlib` installed to visualize the results.
+
+
+Absolutely! Here’s a **step-by-step guide** for your README that starts **from installing WSL and Ubuntu on Windows** and continues through the Hadoop + MapReduce MovieLens project setup, in a style similar to your weather assignment example.
+
+---
+
+## Setup Instructions
+
+### Install WSL and Ubuntu on Windows
+
+**a. Install WSL:**
+Open **PowerShell as Administrator** and run:
+
+```powershell
+wsl --install
 ```
 
+* After installation, restart your computer if prompted.
+* Launch Ubuntu from the Start menu.
+* Set your **username** and **password**.
 
-The project is organized into directories for source code, data, and output, as follows:
+*(If Ubuntu is not installed, search for “Ubuntu” in Microsoft Store and install it.)*
 
-* **README.md** – Step-by-step instructions to compile and run the MapReduce jobs (see below)
-* **src/movielens/AverageRatingMapper.java** – Mapper class to output `(movieId, rating)` pairs
-* **src/movielens/AverageRatingReducer.java** – Reducer class to compute the average rating per movie
-* **src/movielens/MostRatedMapper.java** – Mapper class to output `(movieId, 1)` pairs for counting ratings (similar to a word count pattern)
-* **src/movielens/MostRatedReducer.java** – Reducer class to sum up the counts per movie (producing total ratings count per movie)
-* **src/movielens/AverageRatingDriver.java** – Driver class (with `main`) to configure and run the "average rating per movie" MapReduce job
-* **src/movielens/MostRatedDriver.java** – Driver class to configure and run the "most rated movies (count per movie)" MapReduce job
-* **MovieLensAnalysis.jar** – The compiled jar file containing all classes (created after compiling the Java source code)
-* **output/** - ploted images of the result after running the plot_movielens.py script
-* **plot_movielens.py** - Python script to plot the results of the MapReduce jobs (requires matplotlib)
-* **rating_counts.tsv** – Output file from the most rated movies job, containing movieId and total count of ratings
-* **avg_ratings.tsv** – Output file from the average ratings job, containing movieId and average rating
-* **build/cl
+**b. Update Ubuntu:**
+In the Ubuntu terminal:
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+---
+
+### Set Up SSH (for Hadoop)
+
+Hadoop uses SSH to manage nodes (even on a single node).
+**Remove and reinstall OpenSSH:**
+
+```bash
+sudo apt --assume-yes remove openssh-server
+sudo apt --assume-yes install openssh-server
+```
+
+**Generate an SSH key (no passphrase):**
+
+```bash
+ssh-keygen -t rsa
+```
+
+(Press Enter twice to leave the passphrase empty.)
+
+**Add your SSH key to authorized keys:**
+
+```bash
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+```
+
+**Start SSH service:**
+
+```bash
+sudo service ssh start
+```
+
+**Test SSH connection:**
+
+```bash
+ssh localhost
+```
+
+---
+
+### Install Java (Required for Hadoop)
+
+```bash
+sudo apt install openjdk-11-jdk
+```
+
+---
+
+### Download and Extract Hadoop
+
+**Download and extract Hadoop 3.4.1:**
+
+```bash
+wget -c https://downloads.apache.org/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz
+tar -xvzf hadoop-3.4.1.tar.gz
+mv hadoop-3.4.1 ~/hadoop-3.4.1
+```
+
+---
+
+### Configure Hadoop
+
+* Move to the Hadoop directory:
+
+  ```bash
+  cd ~/hadoop-3.4.1
+  ```
+* Edit configuration files: `core-site.xml`, `hdfs-site.xml`, `mapred-site.xml`, `yarn-site.xml` inside `~/hadoop-3.4.1/etc/hadoop/`.
+  *(You can use `nano`, `vim`, or `code` from VS Code if installed:)*
+
+  ```bash
+  nano etc/hadoop/core-site.xml
+  ```
+
+  *(Paste the necessary config at the end of each file. See the official [Hadoop Single Node Setup](https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html) for details.)*
+
+---
+
+### Set Hadoop Environment Variables
+
+Edit your `.bashrc` file:
+
+```bash
+nano ~/.bashrc
+```
+
+Add these lines at the end (edit paths/versions as needed):
+
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export HADOOP_HOME=~/hadoop-3.4.1
+export PATH=$PATH:$HADOOP_HOME/bin
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/
+export HADOOP_CLASSPATH=$JAVA_HOME/lib/tools.jar
+```
+
+Reload:
+
+```bash
+source ~/.bashrc
+```
+
+---
+
+### Format HDFS and Start Hadoop
+
+**Format HDFS:**
+
+```bash
+cd ~/hadoop-3.4.1
+bin/hdfs namenode -format
+```
+
+**Start Hadoop:**
+
+```bash
+sbin/start-dfs.sh
+sbin/start-yarn.sh
+```
 
 
 ## How to Run the MapReduce Jobs
 
-Follow these instructions to run the Hadoop MapReduce analysis on the MovieLens 25M dataset. This assumes you have a Hadoop environment set up (either a local single-node cluster or pseudo-distributed setup) and Java installed.
+- Follow these instructions to run the Hadoop MapReduce analysis.
 
 1. **Setup Hadoop Environment:** Ensure that Hadoop is installed and configured on your system (HADOOP\_HOME set, etc.). You can run these jobs on a local standalone mode, a pseudo-distributed (single-node) cluster, or a full cluster. Make sure HDFS and YARN are running if using pseudo/full distribution.
 
@@ -124,7 +286,90 @@ Follow these instructions to run the Hadoop MapReduce analysis on the MovieLens 
    ... 
    ```
 
-   Each line represents a movieId and its computed average or count. (Note: The actual values depend on the dataset; movie IDs here are just examples.)
+   Each line represents a movieId and its computed average or count.
+
+## Plot Results (Python Visualization)
+After running the MapReduce jobs, you can visualize the results using Python. The `plot_movies.py` script reads the output files and generates plots.
+stall requirements (if needed): `pip install matplotlib pandas`
+
+Run:
+
+```bash
+python plot_movielens.py
+```
+Output images will be saved in the output/ folder.
+
+## Access Hadoop Web UIs
+Get your WSL IP:
+```
+    hostname -I
+```
+You can also use `localhost` if running on a single-node setup.
+
+Then, open your web browser and access the Hadoop UIs:
+```bash
+# Open in your Windows browser:
+      HDFS UI (NameNode): http://<WSL-IP>:9870 or http://localhost:9870
+      YARN UI (ResourceManager): http://<WSL-IP>:8088 or http://localhost:8088
+   ```
+Open in your Windows browser:
+
+## Shutdown Hadoop and WSL
+After you finish your analysis, it’s a good practice to stop Hadoop services and WSL:  
+```bash
+# Stop Hadoop services
+cd ~/hadoop-3.4.1
+sbin/stop-dfs.sh
+sbin/stop-yarn.sh
+# Stop WSL
+wsl --shutdown
+```
+## Summary of Steps
+1: Install WSL and Ubuntu on Windows
+   - Use PowerShell to install WSL.
+   - Launch Ubuntu and set up your username/password.
+
+2️: Set up SSH for Hadoop
+   - Install OpenSSH server.
+   - Generate SSH keys and configure authorized keys.
+   - Start the SSH service and test connection.
+
+3️: Install Java
+   - Install OpenJDK 11 using `apt`.
+
+4️: Download and extract Hadoop
+   - Download Hadoop 3.4.1 and extract it to your home directory.
+
+5️: Configure Hadoop
+   - Edit `core-site.xml`, `hdfs-site.xml`, `mapred-site.xml`, and `yarn-site.xml` in the Hadoop configuration directory.
+   - Set environment variables in `.bashrc` for Hadoop and Java.
+
+6️: Format HDFS and start Hadoop
+   - Format HDFS using `bin/hdfs namenode -format`.
+   - Start Hadoop services with `sbin/start-dfs.sh` and `sbin/start-yarn.sh`.
+
+7️: Compile the MapReduce jobs
+   - Compile Java code in the `src/movielens` directory and create a jar file.
+
+8️: Run the Average Rating job and Most Rated job
+   - Use `hadoop jar` command to run the Average Rating job on the `ratings.csv` file. 
+   - Use `hadoop jar` command to run the Most Rated job on the same `ratings.csv` file.
+
+9: Verify output files
+   - Use `hadoop fs -head` to check the output files for average ratings and rating counts.
+
+10: Visualize results with Python
+   - Run `plot_movies.py` to generate plots from the output files.
+
+1️1: Access Hadoop Web UIs
+   - Open HDFS and YARN UIs in your web browser using the WSL IP or `localhost`.
+
+1️2: Shutdown Hadoop and WSL
+   - Stop Hadoop services and shut down WSL.
+
+
+
+
 
 7. **Capturing Screenshots/Logs:** To document your successful run, capture screenshots of:
 
