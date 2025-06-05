@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
 Generate three PNG plots from MapReduce outputs:
-  1. hist_avg.png           – histogram of average ratings
-  2. top20_counts.png       – top-20 most-rated movies
-  3. scatter_avg_vs_cnt.png – avg rating vs #ratings (log-scale)
+  1. hist_avg.png  - histogram of average ratings
+  2. top20_counts.png  - top-20 most-rated movies
 Saved into ./output/
 """
 
@@ -34,14 +33,5 @@ plt.title("Top-20 Movies by Rating Count")
 plt.xlabel("Number of ratings"); plt.ylabel("Movie ID")
 plt.tight_layout(); plt.savefig(OUTDIR / "top20_counts.png", dpi=150); plt.close()
 
-# 3) scatter avg vs cnt ----------------------------------------------
-df = pd.merge(avg, cnt, on="movieId")
-plt.figure()
-plt.scatter(df["cnt"], df["avg"], alpha=0.4, s=8)
-plt.xscale("log")
-plt.axhline(df["avg"].mean(), ls="--", lw=1, c="grey")
-plt.title("Average Rating vs #Ratings (log-scale)")
-plt.xlabel("Number of ratings (log10)"); plt.ylabel("Average rating")
-plt.tight_layout(); plt.savefig(OUTDIR / "scatter_avg_vs_cnt.png", dpi=150); plt.close()
 
 print("✓ Plots saved in", OUTDIR)

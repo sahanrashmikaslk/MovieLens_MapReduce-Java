@@ -11,6 +11,7 @@ import org.apache.hadoop.mapreduce.Mapper;
  * Mapper for calculating average rating per movie.
  * Emits (movieId, rating) as (IntWritable, DoubleWritable).
  */
+
 public class AverageRatingMapper extends Mapper<LongWritable, Text, IntWritable, DoubleWritable> {
 
     private IntWritable movieIdKey = new IntWritable();

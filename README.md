@@ -54,9 +54,6 @@ To run this project, you need the following:
 - **Java**: Java Development Kit (JDK) installed to compile the Java code.
 - **Python**: Python with `matplotlib` installed to visualize the results.
 
-
-Absolutely! Here’s a **step-by-step guide** for your README that starts **from installing WSL and Ubuntu on Windows** and continues through the Hadoop + MapReduce MovieLens project setup, in a style similar to your weather assignment example.
-
 ---
 
 ## Setup Instructions

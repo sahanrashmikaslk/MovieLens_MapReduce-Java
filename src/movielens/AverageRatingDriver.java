@@ -12,6 +12,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * Driver (main) to run the AverageRating MapReduce job.
  * Usage: hadoop jar MovieLensAnalysis.jar movielens.AverageRatingDriver <input_path> <output_path>
  */
+
 public class AverageRatingDriver {
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {

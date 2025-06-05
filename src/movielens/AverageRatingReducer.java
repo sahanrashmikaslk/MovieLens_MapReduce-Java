@@ -10,6 +10,7 @@ import org.apache.hadoop.mapreduce.Reducer;
  * Reducer for calculating average rating per movie.
  * Receives (movieId, [rating1, rating2, ...]) and outputs (movieId, avgRating).
  */
+
 public class AverageRatingReducer extends Reducer<IntWritable, DoubleWritable, IntWritable, DoubleWritable> {
 
     private DoubleWritable result = new DoubleWritable();

@@ -9,6 +9,7 @@ import org.apache.hadoop.mapreduce.Reducer;
  * Reducer for counting ratings per movie.
  * Receives (movieId, [1, 1, 1, ...]) and outputs (movieId, totalCount).
  */
+
 public class MostRatedReducer extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
 
     private IntWritable result = new IntWritable();

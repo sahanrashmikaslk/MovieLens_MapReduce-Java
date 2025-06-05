@@ -11,6 +11,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * Driver (main) to run the MostRated MapReduce job (movie rating counts).
  * Usage: hadoop jar MovieLensAnalysis.jar movielens.MostRatedDriver <input_path> <output_path>
  */
+
 public class MostRatedDriver {
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {

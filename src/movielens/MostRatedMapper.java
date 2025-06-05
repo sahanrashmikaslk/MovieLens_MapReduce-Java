@@ -10,6 +10,7 @@ import org.apache.hadoop.mapreduce.Mapper;
  * Mapper for counting ratings per movie (finding most rated movies).
  * Emits (movieId, 1) for each rating record.
  */
+
 public class MostRatedMapper extends Mapper<LongWritable, Text, IntWritable, IntWritable> {
 
     private IntWritable movieIdKey = new IntWritable();
