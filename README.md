@@ -1,8 +1,3 @@
-Great. I’ll prepare a complete MapReduce solution using Java for the MovieLens dataset to calculate the average rating per movie and find the most rated movies. This will include code files, instructions to run Hadoop locally, guidance for capturing evidence (screenshots/logs), and a structured README suitable for GitHub.
-
-I’ll let you know once everything is ready.
-
-
 # Hadoop MapReduce Analysis of MovieLens 25M Ratings
 
 ## Project Structure
