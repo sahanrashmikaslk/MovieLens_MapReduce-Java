@@ -2,6 +2,30 @@
 
 ## Project Structure
 
+```
+
+.
+├── README.md                  # Instructions to compile and run MapReduce jobs
+├── src/
+│   └── movielens/
+│       ├── AverageRatingMapper.java        # Mapper: (movieId, rating)
+│       ├── AverageRatingReducer.java       # Reducer: computes average rating
+│       ├── MostRatedMapper.java            # Mapper: (movieId, 1) for counting
+│       ├── MostRatedReducer.java           # Reducer: sums ratings count
+│       ├── AverageRatingDriver.java        # Driver: runs avg rating job
+│       └── MostRatedDriver.java            # Driver: runs most rated job
+├── MovieLensAnalysis.jar       # Compiled jar (after build)
+├── output/
+│   └── \[plotted images from plot\_movielens.py]
+├── plot\_movielens.py           # Python script to plot results (matplotlib)
+├── rating\_counts.tsv           # Output: movieId and total count (most rated job)
+└── avg\_ratings.tsv             # Output: movieId and average rating (avg rating job)
+└── build/
+    └── classes/
+        └── [compiled .class files]
+```
+
+
 The project is organized into directories for source code, data, and output, as follows:
 
 * **README.md** – Step-by-step instructions to compile and run the MapReduce jobs (see below)
@@ -16,6 +40,7 @@ The project is organized into directories for source code, data, and output, as 
 * **plot_movielens.py** - Python script to plot the results of the MapReduce jobs (requires matplotlib)
 * **rating_counts.tsv** – Output file from the most rated movies job, containing movieId and total count of ratings
 * **avg_ratings.tsv** – Output file from the average ratings job, containing movieId and average rating
+* **build/cl
 
 
 ## How to Run the MapReduce Jobs
