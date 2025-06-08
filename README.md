@@ -208,7 +208,20 @@ sbin/start-yarn.sh
 
 1. **Setup Hadoop Environment:** Ensure that Hadoop is installed and configured on your system (HADOOP\_HOME set, etc.). You can run these jobs on a local standalone mode, a pseudo-distributed (single-node) cluster, or a full cluster. Make sure HDFS and YARN are running if using pseudo/full distribution.
 
-2. **Obtain the Dataset:** Download the **MovieLens 25M Ratings** dataset (the `ratings.csv` file) from Kaggle or GroupLens. Place `ratings.csv` in a local directory (or directly in HDFS). If running in HDFS, you may need to create a directory and put the file there. For example:
+2. **Clone the Repository into the Root Directory**
+
+
+```bash
+#Move to root directory:
+cd ~/
+
+#Clone the project:
+git clone https://github.com/riyajidevindu/weather_project.git
+
+```bash
+
+
+3. **Obtain the Dataset:** Download the **MovieLens 25M Ratings** dataset (the `ratings.csv` file) from Kaggle or GroupLens. Place `ratings.csv` in a local directory (or directly in HDFS). If running in HDFS, you may need to create a directory and put the file there. For example:
 
    * Create an HDFS directory for input (if not already):
 
@@ -223,7 +236,7 @@ sbin/start-yarn.sh
 
    *(Replace `/path/to/ratings.csv` with the actual path where you saved the dataset.)*
 
-3. **Compile the Code:** Navigate to the project source directory and compile the Java code into a jar. You can use Hadoop’s built-in compiler invocation for convenience. For example, from the project root directory:
+4. **Compile the Code:** Navigate to the project source directory and compile the Java code into a jar. You can use Hadoop’s built-in compiler invocation for convenience. For example, from the project root directory:
 
    ```bash
    # Compile all Java files in src/ (assuming current dir has src/movielens/*.java)
@@ -234,7 +247,7 @@ sbin/start-yarn.sh
 
    This will create `MovieLensAnalysis.jar` containing all the classes. (Ensure that `$HADOOP_HOME/bin` is in your PATH or adjust the path accordingly.) The above uses Hadoop's built-in `javac` tool and classpath to compile the code, then creates a jar file.
 
-4. **Run the Average Rating job:** Use the `hadoop jar` command to run the first MapReduce job that calculates average rating per movie. For example:
+5. **Run the Average Rating job:** Use the `hadoop jar` command to run the first MapReduce job that calculates average rating per movie. For example:
 
    ```bash
    hadoop jar MovieLensAnalysis.jar movielens.AverageRatingDriver \
@@ -251,7 +264,7 @@ sbin/start-yarn.sh
 
      (This confirms the MapReduce job ran to completion.)
 
-5. **Run the Most Rated Count job:** Next, run the second job to count ratings per movie:
+6. **Run the Most Rated Count job:** Next, run the second job to count ratings per movie:
 
    ```bash
    hadoop jar MovieLensAnalysis.jar movielens.MostRatedDriver \
@@ -260,7 +273,7 @@ sbin/start-yarn.sh
 
    This will create an output directory `/user/yourusername/movielens/output/rating_counts` with the count of ratings for each movie. Again, monitor the console for successful completion.
 
-6. **Verify Output:** After each job, you can verify the results in HDFS. Hadoop will produce one or more part files in the output directories. You can use `hadoop fs` (or `hdfs dfs`) commands to inspect them. For example, to check the first few lines of the average ratings result:
+7. **Verify Output:** After each job, you can verify the results in HDFS. Hadoop will produce one or more part files in the output directories. You can use `hadoop fs` (or `hdfs dfs`) commands to inspect them. For example, to check the first few lines of the average ratings result:
 
    ```bash
    hadoop fs -head /user/yourusername/movielens/output/avg_ratings/part-r-00000
