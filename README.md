@@ -216,10 +216,13 @@ sbin/start-yarn.sh
 cd ~/
 
 #Clone the project:
-git clone https://github.com/riyajidevindu/weather_project.git
+git clone https://github.com/sahanrashmikaslk/MovieLens_MapReduce-Java.git
 
-```bash
+```
 
+   * This will create a directory named `MovieLens_MapReduce-Java` containing the source code and other files.
+
+   * Alternatively, you can download the project as a zip file from GitHub and extract it to your home directory.
 
 3. **Obtain the Dataset:** Download the **MovieLens 25M Ratings** dataset (the `ratings.csv` file) from Kaggle or GroupLens. Place `ratings.csv` in a local directory (or directly in HDFS). If running in HDFS, you may need to create a directory and put the file there. For example:
 
